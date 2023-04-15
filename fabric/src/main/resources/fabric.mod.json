@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "fluidui",
+  "version": "${version}",
+  "name": "FluidUI",
+  "description": "This is a ui library used to make GUI development easier.",
+  "authors": [
+    "Drew Chase"
+  ],
+  "contact": {},
+  "license": "All Rights Reserved",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "chase.minecraft.architectury.fluidui.fabric.FluidUIFabric"
+    ]
+  },
+  "mixins": [
+    "FluidUI.mixins.json",
+    "FluidUI-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.19",
+    "minecraft": ">=1.19.4"
+  }
+}
