@@ -1,6 +1,7 @@
 package chase.minecraft.architectury.fluidui.gui.component;
 
 import chase.minecraft.architectury.fluidui.FluidTheme;
+import chase.minecraft.architectury.fluidui.FluidUI;
 import chase.minecraft.architectury.fluidui.util.ScreenSpaceCoordinate;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -38,6 +39,7 @@ public class FluidButtonWidget extends AbstractButton
 		this.onClick = onClick;
 		this.onContextMenu = onContextMenu;
 		coordinate = new ScreenSpaceCoordinate(this);
+		FluidUI.log.debug("Creating {} label of {}", this.getClass().getSimpleName(), label.getString());
 	}
 	
 	/**

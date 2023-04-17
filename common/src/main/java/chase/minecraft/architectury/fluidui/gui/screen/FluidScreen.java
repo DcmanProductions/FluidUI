@@ -1,6 +1,7 @@
 package chase.minecraft.architectury.fluidui.gui.screen;
 
 import chase.minecraft.architectury.fluidui.FluidTheme;
+import chase.minecraft.architectury.fluidui.FluidUI;
 import chase.minecraft.architectury.fluidui.util.ScreenSpaceCoordinate;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -29,6 +30,7 @@ public class FluidScreen extends Screen
 		super(title);
 		this.parent = parent;
 		minecraft = Minecraft.getInstance();
+		FluidUI.log.debug("Creating {} label of {}", this.getClass().getSimpleName(), title.getString());
 	}
 	
 	/**
