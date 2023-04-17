@@ -1,3 +1,5 @@
+<link href="/style.min.css" rel="stylesheet">
+
 # Fluid Screen
 Fluid screen is the base class for all of FluidUI's interfaces
 ## Create Test Screen

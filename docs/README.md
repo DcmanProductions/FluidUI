@@ -1,3 +1,5 @@
+<link href="style.min.css" rel="stylesheet">
+
 ![Fluid UI Banner.svg](images/Fluid%20UI%20Banner.svg)
 
 # What is FluidUI
