@@ -1,3 +1,4 @@
+<link href="/FluidUI/style.min.css" rel="stylesheet">
 # Fluid Theme
 
 Fluid Theme class is where all the interface styling is stored.  

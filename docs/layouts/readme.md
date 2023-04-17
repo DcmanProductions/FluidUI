@@ -1,3 +1,5 @@
+<link href="/FluidUI/style.min.css" rel="stylesheet">
+
 # Fluid Layouts
 
 Layouts are used to organize widgets, the different types of layouts are `Horizontal`, `Vertical`, `Grid`
@@ -21,7 +23,9 @@ Horizontal lists are used to organize widgets horizontally.
 | Children  | Abstract Widget Array | This is an array of all the children  |
 
 ### Alignment
-There are 5 Alignment options and DEFAULT is what ever is default for the panel.  
+
+There are 5 Alignment options and DEFAULT is what ever is default for the panel.
+
 1. `DEFAULT` - This is the **default** alignment for the panel
 2. `CENTER` - This will align all the children to the **center**.
 3. `LEFT` - This will align the children to the **left**. This does **_NOT_** work for vertical.
@@ -30,12 +34,16 @@ There are 5 Alignment options and DEFAULT is what ever is default for the panel.
 6. `BOTTOM` - This will align the children to the **bottom**. This does **_NOT_** work for horizontal.
 
 ### Example:
+
 Create the panel element.   
 This is the same for each of the panel types.
+
 ```java
-HorizontalListWidget horizontalList = new HorizontalListWidget(Component.empty(), 0, 0, 500, 500, 20, Alignment.CENTER, WIDGET_1, WIDGET_2 //. ETC);
+HorizontalListWidget horizontalList=new HorizontalListWidget(Component.empty(),0,0,500,500,20,Alignment.CENTER,WIDGET_1,WIDGET_2 //. ETC);
 ```
-Now we need to add it to the screen.  If your using [FluidScreen](/docs/screen.md) add the following to the `init` function
+
+Now we need to add it to the screen. If your using [FluidScreen](/docs/screen.md) add the following to the `init`
+function
 
 ```java
 //...
