@@ -1,6 +1,7 @@
 package chase.minecraft.architectury.fluidui.mixin;
 
 import chase.minecraft.architectury.fluidui.TestScreen;
+import chase.minecraft.architectury.fluidui.impl.AsyncThemeLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;
@@ -17,6 +18,8 @@ public class TitleScreenMixin
 	{
 		TitleScreen screen = (TitleScreen) ((Object) this);
 		Minecraft minecraft = Minecraft.getInstance();
+		
+		AsyncThemeLoader.getInstance().loadAll();
 		
 		minecraft.setScreen(new TestScreen(Component.literal("Test"), screen));
 	}
