@@ -1,0 +1,11 @@
+{
+  "backgroundColor": "#111111",
+  "primaryColor": "#e2564c",
+  "widgetBackgroundColor": "#1a1a1a",
+  "widgetForegroundColor": "#ffffff",
+  "widgetHoverBackgroundColor": "#2b2b2b",
+  "widgetHoverForegroundColor": "#FFFFFF",
+  "dropdownHoverBackgroundColor": "#1a1a1a",
+  "dropdownHoverForegroundColor": "#FFFFFF",
+  "borderColor": "#24F65F"
+}
