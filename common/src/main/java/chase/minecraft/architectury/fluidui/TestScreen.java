@@ -13,16 +13,30 @@ import org.jetbrains.annotations.Nullable;
 
 public class TestScreen extends FluidScreen
 {
+	/**
+	 * Creates a fluid screen
+	 *
+	 * @param title  - Screens title
+	 * @param parent - the parent screen
+	 */
 	public TestScreen(Component title, @Nullable Screen parent)
 	{
 		super(title, parent);
 	}
 	
+	/**
+	 * Creates a fluid screen with the parent being null.
+	 *
+	 * @param title - Screens title
+	 */
 	public TestScreen(Component title)
 	{
 		super(title);
 	}
 	
+	/**
+	 * This runs when the screen is created.
+	 */
 	@Override
 	protected void init()
 	{
@@ -41,6 +55,9 @@ public class TestScreen extends FluidScreen
 		super.init();
 	}
 	
+	/**
+	 * This runs every frame
+	 */
 	@Override
 	public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTicks)
 	{
