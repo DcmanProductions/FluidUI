@@ -1,109 +1,107 @@
 package chase.minecraft.architectury.fluidui;
 
+import chase.minecraft.architectury.fluidui.impl.AsyncThemeLoader;
+import com.google.gson.JsonObject;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+
 public class FluidTheme
 {
 	
-	private static int backgroundColor = 0x0D1010;
-	private static int primaryColor = 0x5ce24c;
-	private static int widgetBackgroundColor = 0x1D1D1D;
-	private static int widgetForegroundColor = 0xFFFFFF;
-	private static int widgetHoverBackgroundColor = 0x262626;
-	private static int widgetHoverForegroundColor = 0xFFFFFF;
-	private static int dropdownHoverBackgroundColor = 0x333333;
-	private static int dropdownHoverForegroundColor = 0xFFFFFF;
-	private static int borderColor = 0x24F65F;
+	private int backgroundColor;
+	private int primaryColor;
+	private int widgetBackgroundColor;
+	private int widgetForegroundColor;
+	private int widgetHoverBackgroundColor;
+	private int widgetHoverForegroundColor;
+	private int dropdownHoverBackgroundColor;
+	private int dropdownHoverForegroundColor;
+	private int borderColor;
+	private final ResourceLocation theme_location;
+	public static final FluidTheme DEFUALT = new FluidTheme(FluidUI.MOD_ID, "default");
+	public static final FluidTheme DARK = new FluidTheme(FluidUI.MOD_ID, "dark");
+	private final String theme_name;
 	
-	private FluidTheme()
+	public FluidTheme(String mod_id, String theme_name)
 	{
+		theme_location = new ResourceLocation(mod_id, "fluid/themes/%s.json".formatted(theme_name));
+		this.theme_name = theme_name;
+		AsyncThemeLoader.getInstance().put(this);
 	}
 	
-	public static int getDropdownHoverBackgroundColor()
+	public void load()
 	{
-		return dropdownHoverBackgroundColor;
+		try
+		{
+			FluidUI.log.info("Loading Theme: {}", theme_name);
+			BufferedReader in = Minecraft.getInstance().getResourceManager().openAsReader(theme_location);
+			JsonObject json = GsonHelper.parse(in);
+			backgroundColor = Integer.decode(json.get("backgroundColor").getAsString());
+			primaryColor = Integer.decode(json.get("primaryColor").getAsString());
+			widgetBackgroundColor = Integer.decode(json.get("widgetBackgroundColor").getAsString());
+			widgetForegroundColor = Integer.decode(json.get("widgetForegroundColor").getAsString());
+			widgetHoverBackgroundColor = Integer.decode(json.get("widgetHoverBackgroundColor").getAsString());
+			widgetHoverForegroundColor = Integer.decode(json.get("widgetHoverForegroundColor").getAsString());
+			dropdownHoverBackgroundColor = Integer.decode(json.get("dropdownHoverBackgroundColor").getAsString());
+			dropdownHoverForegroundColor = Integer.decode(json.get("dropdownHoverForegroundColor").getAsString());
+			borderColor = Integer.decode(json.get("borderColor").getAsString());
+		} catch (IOException e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 	
-	public static void setDropdownHoverBackgroundColor(int dropdownHoverBackgroundColor)
+	void parse(BufferedReader reader)
 	{
-		FluidTheme.dropdownHoverBackgroundColor = dropdownHoverBackgroundColor;
+		// parse json
 	}
 	
-	public static int getDropdownHoverForegroundColor()
-	{
-		return dropdownHoverForegroundColor;
-	}
-	
-	public static void setDropdownHoverForegroundColor(int dropdownHoverForegroundColor)
-	{
-		FluidTheme.dropdownHoverForegroundColor = dropdownHoverForegroundColor;
-	}
-	
-	public static int getBackgroundColor()
+	public int getBackgroundColor()
 	{
 		return backgroundColor;
 	}
 	
-	public static void setBackgroundColor(int backgroundColor)
-	{
-		FluidTheme.backgroundColor = backgroundColor;
-	}
-	
-	public static int getPrimaryColor()
+	public int getPrimaryColor()
 	{
 		return primaryColor;
 	}
 	
-	public static void setPrimaryColor(int primaryColor)
-	{
-		FluidTheme.primaryColor = primaryColor;
-	}
-	
-	public static int getWidgetBackgroundColor()
+	public int getWidgetBackgroundColor()
 	{
 		return widgetBackgroundColor;
 	}
 	
-	public static void setWidgetBackgroundColor(int widgetBackgroundColor)
-	{
-		FluidTheme.widgetBackgroundColor = widgetBackgroundColor;
-	}
-	
-	public static int getWidgetForegroundColor()
+	public int getWidgetForegroundColor()
 	{
 		return widgetForegroundColor;
 	}
 	
-	public static void setWidgetForegroundColor(int widgetForegroundColor)
-	{
-		FluidTheme.widgetForegroundColor = widgetForegroundColor;
-	}
-	
-	public static int getWidgetHoverBackgroundColor()
+	public int getWidgetHoverBackgroundColor()
 	{
 		return widgetHoverBackgroundColor;
 	}
 	
-	public static void setWidgetHoverBackgroundColor(int widgetHoverBackgroundColor)
-	{
-		FluidTheme.widgetHoverBackgroundColor = widgetHoverBackgroundColor;
-	}
-	
-	public static int getWidgetHoverForegroundColor()
+	public int getWidgetHoverForegroundColor()
 	{
 		return widgetHoverForegroundColor;
 	}
 	
-	public static void setWidgetHoverForegroundColor(int widgetHoverForegroundColor)
+	public int getDropdownHoverBackgroundColor()
 	{
-		FluidTheme.widgetHoverForegroundColor = widgetHoverForegroundColor;
+		return dropdownHoverBackgroundColor;
 	}
 	
-	public static int getBorderColor()
+	public int getDropdownHoverForegroundColor()
+	{
+		return dropdownHoverForegroundColor;
+	}
+	
+	public int getBorderColor()
 	{
 		return borderColor;
-	}
-	
-	public static void setBorderColor(int borderColor)
-	{
-		FluidTheme.borderColor = borderColor;
 	}
 }
