@@ -49,3 +49,44 @@ allprojects {
         withSourcesJar()
     }
 }
+
+
+import java.nio.file.Paths
+
+tasks.register('buildMerged', Zip) {
+    allprojects {
+        dependsOn it.tasks.getByName("build")
+    }
+    def folder = file(".gradle/.mergemods")
+    folder.mkdirs()
+    def fabricJar = file("fabric/build/libs/${rootProject.archives_base_name}-${rootProject.minecraft_version}-fabric-${rootProject.mod_version}.jar")
+    def forgeJar = file("forge/build/libs/${rootProject.archives_base_name}-${rootProject.minecraft_version}-forge-${rootProject.mod_version}.jar")
+    def fabricFolder = new File(folder, ".tempFabric")
+    def forgeFolder = new File(folder, ".tempForge")
+    def mergeFolder = new File(folder, ".tempMerge")
+    file("merging.policy").eachLine {
+        if (it.isBlank() || it.startsWith("#")) return
+        def env = it.substring(0, it.indexOf(' ')).toLowerCase()
+        def path = Paths.get(it.substring(env.length() + 1)).toString()
+        filesMatching(path) {
+            if (!it._gr_dyn_.toString().contains(env)) {
+                it.exclude()
+            }
+        }
+    }
+    forgeFolder.deleteDir()
+    fabricFolder.deleteDir()
+    mergeFolder.deleteDir()
+    mergeFolder.mkdirs()
+    archivesBaseName = "${rootProject.name}"
+    archiveExtension = "jar"
+    destinationDir = file('build/libs')
+    duplicatesStrategy(DuplicatesStrategy.WARN)
+
+    from zipTree(fabricJar)
+    from zipTree(forgeJar)
+}
+
+rootProject.subprojects.forEach {
+    buildMerged.mustRunAfter it.tasks.getByName("build")
+}
