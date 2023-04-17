@@ -53,17 +53,16 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 	@Override
 	public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTicks)
 	{
+		super.render(poseStack, mouseX, mouseY, partialTicks);
 		if (visible)
 		{
 			isHovered = coordinate.isWithinBounds(mouseX, mouseY) || hoveredValue != null;
-			System.out.printf("Is Hovered: %s\n", isHovered);
 			this.setMessage(values.get(selectedValue));
 			if (isFocused())
 			{
 				renderDropdownItems(poseStack, mouseX, mouseY);
 			}
 		}
-		super.render(poseStack, mouseX, mouseY, partialTicks);
 	}
 	
 	
@@ -144,7 +143,7 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 	/**
 	 * Resets the dropdowns selected value to the initial value
 	 */
-	protected void reset()
+	public void reset()
 	{
 		selectedValue = initialValue;
 	}
