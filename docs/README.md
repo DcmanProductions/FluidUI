@@ -1,4 +1,4 @@
-![Fluid UI Banner.svg](/images/Fluid%20UI%20Banner.svg)
+![Fluid UI Banner.svg](images/Fluid%20UI%20Banner.svg)
 
 # What is FluidUI
 
