@@ -1,4 +1,4 @@
-package chase.minecraft.architectury.fluidui;
+package chase.minecraft.architectury.fluidui.enums;
 
 public enum Alignment
 {
