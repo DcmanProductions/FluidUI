@@ -1,4 +1,5 @@
 <link href="/FluidUI/style.min.css" rel="stylesheet">
+<link rel="shortcut icon" href="/FluidUI/images/Fluid UI Logo.svg" type="image/x-icon">
 
 # Fluid Screen
 Fluid screen is the base class for all of FluidUI's interfaces

@@ -1,4 +1,5 @@
 <link href="/FluidUI/style.min.css" rel="stylesheet">
+<link rel="shortcut icon" href="/FluidUI/images/Fluid UI Logo.svg" type="image/x-icon">
 
 # What are Fluid Widgets?
 Fluid widgets are intractable components, buttons, dropdowns, toggles, etc. that can be added to a screen.  
