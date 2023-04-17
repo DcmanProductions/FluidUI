@@ -42,7 +42,7 @@ This is the same for each of the panel types.
 HorizontalListWidget horizontalList=new HorizontalListWidget(Component.empty(),0,0,500,500,20,Alignment.CENTER,WIDGET_1,WIDGET_2 //. ETC);
 ```
 
-Now we need to add it to the screen. If your using [FluidScreen](/docs/screen.md) add the following to the `init`
+Now we need to add it to the screen. If your using [FluidScreen](https://dcmanproductions.github.io/FluidUI/screen) add the following to the `init`
 function
 
 ```java
