@@ -90,3 +90,7 @@ tasks.register('buildMerged', Zip) {
 rootProject.subprojects.forEach {
     buildMerged.mustRunAfter it.tasks.getByName("build")
 }
+
+dependencies {
+    implementation 'org.gaixie.json:json:1.0.0'
+}
