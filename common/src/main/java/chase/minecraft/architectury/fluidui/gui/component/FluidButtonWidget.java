@@ -20,6 +20,7 @@ public class FluidButtonWidget extends AbstractButton
 	@Nullable
 	private final Consumer<FluidButtonWidget> onClick, onContextMenu;
 	protected ScreenSpaceCoordinate coordinate;
+	protected final FluidTheme theme;
 	
 	/**
 	 * Creates a stylish button widget.
@@ -32,13 +33,14 @@ public class FluidButtonWidget extends AbstractButton
 	 * @param onClick       this runs when the button is left-clicked
 	 * @param onContextMenu this runs when the button is right-clicked
 	 */
-	public FluidButtonWidget(Component label, int x, int y, int width, int height, @Nullable Consumer<FluidButtonWidget> onClick, @Nullable Consumer<FluidButtonWidget> onContextMenu)
+	public FluidButtonWidget(FluidTheme theme, Component label, int x, int y, int width, int height, @Nullable Consumer<FluidButtonWidget> onClick, @Nullable Consumer<FluidButtonWidget> onContextMenu)
 	{
 		super(x, y, width, height, label);
 		
 		this.onClick = onClick;
 		this.onContextMenu = onContextMenu;
 		coordinate = new ScreenSpaceCoordinate(this);
+		this.theme = theme;
 		FluidUI.log.debug("Creating {} label of {}", this.getClass().getSimpleName(), label.getString());
 	}
 	
@@ -52,9 +54,9 @@ public class FluidButtonWidget extends AbstractButton
 	 * @param height  the height of the button
 	 * @param onClick this runs when the button is left-clicked
 	 */
-	public FluidButtonWidget(Component label, int x, int y, int width, int height, Consumer<FluidButtonWidget> onClick)
+	public FluidButtonWidget(FluidTheme theme, Component label, int x, int y, int width, int height, Consumer<FluidButtonWidget> onClick)
 	{
-		this(label, x, y, width, height, onClick, null);
+		this(theme, label, x, y, width, height, onClick, null);
 	}
 	
 	@Override
@@ -77,10 +79,10 @@ public class FluidButtonWidget extends AbstractButton
 	public void renderWidget(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTicks)
 	{
 		coordinate = new ScreenSpaceCoordinate(this);
-		int backgroundColor = FluidTheme.getWidgetBackgroundColor();
+		int backgroundColor = theme.getWidgetBackgroundColor();
 		if (isHoveredOrFocused())
 		{
-			backgroundColor = FluidTheme.getWidgetHoverBackgroundColor();
+			backgroundColor = theme.getWidgetHoverBackgroundColor();
 		}
 		float r = FastColor.ARGB32.red(backgroundColor) / 255f;
 		float g = FastColor.ARGB32.green(backgroundColor) / 255f;
@@ -91,8 +93,7 @@ public class FluidButtonWidget extends AbstractButton
 		RenderSystem.setShaderColor(r, g, b, a);
 		fill(poseStack, coordinate.getLeft(), coordinate.getTop(), coordinate.getRight(), coordinate.getBottom(), 0xFF_FF_FF_FF);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		int textColor = active ? 0xFF_FF_FF : 0xCC_CC_CC;
-		renderString(poseStack, Minecraft.getInstance().font, textColor);
+		renderString(poseStack, Minecraft.getInstance().font, theme.getWidgetForegroundColor());
 	}
 	
 	@Override

@@ -1,6 +1,6 @@
 package chase.minecraft.architectury.fluidui.gui.component.layout;
 
-import chase.minecraft.architectury.fluidui.Alignment;
+import chase.minecraft.architectury.fluidui.enums.Alignment;
 import chase.minecraft.architectury.fluidui.util.ScreenSpaceCoordinate;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.AbstractWidget;

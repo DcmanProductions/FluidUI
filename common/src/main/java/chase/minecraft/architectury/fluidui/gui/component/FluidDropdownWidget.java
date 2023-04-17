@@ -4,7 +4,6 @@ import chase.minecraft.architectury.fluidui.FluidTheme;
 import chase.minecraft.architectury.fluidui.util.ScreenSpaceCoordinate;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
@@ -25,9 +24,9 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 	private T hoveredValue;
 	private final int dropdownItemHeight;
 	
-	public FluidDropdownWidget(Component label, int x, int y, int width, int dropdownItemHeight, int height, T initialValue, HashMap<T, Component> values, Consumer<T> onValueChange)
+	public FluidDropdownWidget(FluidTheme theme, Component label, int x, int y, int width, int dropdownItemHeight, int height, T initialValue, HashMap<T, Component> values, Consumer<T> onValueChange)
 	{
-		super(label, x, y, width, height, null, null);
+		super(theme, label, x, y, width, height, null, null);
 		this.values = values;
 		this.selectedValue = this.initialValue = initialValue;
 		this.onValueChange = onValueChange;
@@ -35,9 +34,9 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 		this.dropdownItemHeight = dropdownItemHeight;
 	}
 	
-	public FluidDropdownWidget(Component label, int x, int y, int width, int height, int dropdownItemHeight, T initialValue, T[] values, Consumer<T> onValueChange)
+	public FluidDropdownWidget(FluidTheme theme, Component label, int x, int y, int width, int height, int dropdownItemHeight, T initialValue, T[] values, Consumer<T> onValueChange)
 	{
-		super(label, x, y, width, height, null, null);
+		super(theme, label, x, y, width, height, null, null);
 		this.values = new HashMap<>();
 		for (T item : values)
 		{
@@ -71,7 +70,7 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 		Font font = Minecraft.getInstance().font;
 		int y = getY() + getHeight() + (font.lineHeight / 2);
 		int maxHeight = y + (dropdownItemHeight * (values.size() - 1)) + (font.lineHeight / 2);
-		int hoverColor = FluidTheme.getWidgetHoverBackgroundColor();
+		int hoverColor = theme.getWidgetHoverBackgroundColor();
 		float r = FastColor.ARGB32.red(hoverColor) / 255f;
 		float g = FastColor.ARGB32.green(hoverColor) / 255f;
 		float b = FastColor.ARGB32.blue(hoverColor) / 255f;
@@ -89,7 +88,7 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 			ScreenSpaceCoordinate coordinate = new ScreenSpaceCoordinate(y, getX(), width + getX(), y + dropdownItemHeight);
 			if (coordinate.isWithinBounds(mouseX, mouseY))
 			{
-				int color = FluidTheme.getDropdownHoverBackgroundColor();
+				int color = theme.getDropdownHoverBackgroundColor();
 				r = FastColor.ARGB32.red(color) / 255f;
 				g = FastColor.ARGB32.green(color) / 255f;
 				b = FastColor.ARGB32.blue(color) / 255f;
@@ -101,7 +100,8 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 			}
 			if (!dropdownItemHover)
 				hoveredValue = null;
-			drawCenteredString(poseStack, font, values.get(item), getX() + (width / 2), y + (dropdownItemHeight / 2) - (font.lineHeight / 2), ChatFormatting.WHITE.getColor());
+			int textColor = dropdownItemHover ? theme.getDropdownHoverForegroundColor() : theme.getWidgetForegroundColor();
+			drawCenteredString(poseStack, font, values.get(item), getX() + (width / 2), y + (dropdownItemHeight / 2) - (font.lineHeight / 2), textColor);
 			y += dropdownItemHeight + 1;
 		}
 	}

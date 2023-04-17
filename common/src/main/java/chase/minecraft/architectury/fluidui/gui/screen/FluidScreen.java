@@ -18,6 +18,7 @@ public class FluidScreen extends Screen
 	protected final Screen parent;
 	private ScreenSpaceCoordinate coordinate;
 	protected Minecraft minecraft;
+	protected FluidTheme theme;
 	
 	/**
 	 * Creates a fluid screen
@@ -25,11 +26,12 @@ public class FluidScreen extends Screen
 	 * @param title  - Screens title
 	 * @param parent - the parent screen
 	 */
-	public FluidScreen(Component title, @Nullable Screen parent)
+	public FluidScreen(FluidTheme theme, Component title, @Nullable Screen parent)
 	{
 		super(title);
 		this.parent = parent;
 		minecraft = Minecraft.getInstance();
+		this.theme = theme;
 		FluidUI.log.debug("Creating {} label of {}", this.getClass().getSimpleName(), title.getString());
 	}
 	
@@ -38,9 +40,17 @@ public class FluidScreen extends Screen
 	 *
 	 * @param title - Screens title
 	 */
-	public FluidScreen(Component title)
+	public FluidScreen(FluidTheme theme, Component title)
 	{
-		this(title, null);
+		this(theme, title, null);
+	}
+	
+	/**
+	 * Creates a fluid screen with the parent being null.
+	 */
+	public FluidScreen(FluidTheme theme)
+	{
+		this(theme, Component.empty(), null);
 	}
 	
 	
@@ -62,7 +72,7 @@ public class FluidScreen extends Screen
 	@Override
 	public void renderBackground(@NotNull PoseStack poseStack)
 	{
-		int backgroundColor = FluidTheme.getBackgroundColor();
+		int backgroundColor = theme.getBackgroundColor();
 		float r = FastColor.ARGB32.red(backgroundColor) / 255f;
 		float g = FastColor.ARGB32.green(backgroundColor) / 255f;
 		float b = FastColor.ARGB32.blue(backgroundColor) / 255f;
