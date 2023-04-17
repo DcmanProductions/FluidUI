@@ -12,10 +12,10 @@ and any other minecraft modding platforms that popup throughout the years.
 
 # Table of Contents
 - [Installation](#installation)
-- [Themes](docs/themes.md)
-- [Screen](docs/screen.md)
-- [Layouts](docs/layouts/readme.md)
-- [Widgets](docs/widgets/readme.md)
+- [Themes](themes)
+- [Screen](screen)
+- [Layouts](layouts/)
+- [Widgets](widgets/)
 
 # Installation
 

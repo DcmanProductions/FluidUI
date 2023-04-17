@@ -12,10 +12,10 @@ and any other minecraft modding platforms that popup throughout the years.
 
 # Table of Contents
 - [Installation](#installation)
-- [Themes](docs/themes.md)
-- [Screen](docs/screen.md)
-- [Layouts](docs/layouts/readme.md)
-- [Widgets](docs/widgets/readme.md)
+- [Themes](https://dcmanproductions.github.io/FluidUI/themes)
+- [Screen](https://dcmanproductions.github.io/FluidUI/screen)
+- [Layouts](https://dcmanproductions.github.io/FluidUI/layouts/)
+- [Widgets](https://dcmanproductions.github.io/FluidUI/widgets/)
 
 # Installation
 
