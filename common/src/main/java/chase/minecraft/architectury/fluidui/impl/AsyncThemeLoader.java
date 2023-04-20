@@ -21,6 +21,10 @@ public class AsyncThemeLoader
 	{
 		themes.add(theme);
 	}
+	public void clear(){
+		themes.clear();
+	}
+	
 	
 	public void loadAll()
 	{
@@ -28,6 +32,7 @@ public class AsyncThemeLoader
 		{
 			theme.load();
 		}
+		clear();
 	}
 	
 	
