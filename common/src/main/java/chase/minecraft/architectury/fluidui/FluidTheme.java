@@ -12,33 +12,42 @@ import java.io.IOException;
 public class FluidTheme
 {
 	
-	private int backgroundColor;
-	private int primaryColor;
-	private int widgetBackgroundColor;
-	private int widgetForegroundColor;
-	private int widgetHoverBackgroundColor;
-	private int widgetHoverForegroundColor;
-	private int dropdownHoverBackgroundColor;
-	private int dropdownHoverForegroundColor;
-	private int borderColor;
-	private final ResourceLocation theme_location;
+	protected int backgroundColor;
+	protected int primaryColor;
+	protected int widgetBackgroundColor;
+	protected int widgetForegroundColor;
+	protected int widgetHoverBackgroundColor;
+	protected int widgetHoverForegroundColor;
+	protected int dropdownHoverBackgroundColor;
+	protected int dropdownHoverForegroundColor;
+	protected int borderColor;
+	protected final ResourceLocation themeLocation;
 	public static final FluidTheme DEFUALT = new FluidTheme(FluidUI.MOD_ID, "default");
 	public static final FluidTheme DARK = new FluidTheme(FluidUI.MOD_ID, "dark");
-	private final String theme_name;
+	protected final String themeName;
 	
-	public FluidTheme(String mod_id, String theme_name)
+	/**
+	 * Create a theme with the mod id and theme name<br \>
+	 * Theme file is in <i>resources/assets/{modId}/fluid/themes/{themeName}.json</i>
+	 * @param modId The id of your mod
+	 * @param themeName The name of the theme, not including the .json
+	 */
+	public FluidTheme(String modId, String themeName)
 	{
-		theme_location = new ResourceLocation(mod_id, "fluid/themes/%s.json".formatted(theme_name));
-		this.theme_name = theme_name;
+		themeLocation = new ResourceLocation(modId, "fluid/themes/%s.json".formatted(themeName));
+		this.themeName = themeName;
 		AsyncThemeLoader.getInstance().put(this);
 	}
 	
+	/**
+	 * Loads theme from file. This is automatically run when the title screen is loaded for the first time.
+	 */
 	public void load()
 	{
 		try
 		{
-			FluidUI.log.info("Loading Theme: {}", theme_name);
-			BufferedReader in = Minecraft.getInstance().getResourceManager().openAsReader(theme_location);
+			FluidUI.log.info("Loading Theme: {}", themeName);
+			BufferedReader in = Minecraft.getInstance().getResourceManager().openAsReader(themeLocation);
 			JsonObject json = GsonHelper.parse(in);
 			backgroundColor = Integer.decode(json.get("backgroundColor").getAsString());
 			primaryColor = Integer.decode(json.get("primaryColor").getAsString());
@@ -58,6 +67,16 @@ public class FluidTheme
 	void parse(BufferedReader reader)
 	{
 		// parse json
+	}
+	
+	public ResourceLocation getThemeLocation()
+	{
+		return themeLocation;
+	}
+	
+	public String getThemeName()
+	{
+		return themeName;
 	}
 	
 	public int getBackgroundColor()
