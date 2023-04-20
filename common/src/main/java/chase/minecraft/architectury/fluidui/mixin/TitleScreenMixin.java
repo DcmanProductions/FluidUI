@@ -29,7 +29,7 @@ public class TitleScreenMixin
 		{
 			TitleScreen screen = (TitleScreen) ((Object) this);
 			addRenderableWidget(screen,
-					new FluidButtonWidget(FluidTheme.DEFUALT, Component.literal("Show Demo"), 5, 5, 100, 20, b ->
+					new FluidButtonWidget(FluidTheme.DEFAULT, Component.literal("Show Demo"), 5, 5, 100, 20, b ->
 					{
 						Minecraft.getInstance().setScreen(new TestScreen(Component.literal("Test"), screen));
 					}));
