@@ -11,20 +11,21 @@ import net.minecraft.util.FastColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.function.Consumer;
 
 public class FluidDropdownWidget<T> extends FluidButtonWidget
 {
-	private final HashMap<T, Component> values;
-	private final T initialValue;
-	private T selectedValue;
-	private final Consumer<T> onValueChange;
+	protected final LinkedHashMap<T, Component> values;
+	protected final T initialValue;
+	protected T selectedValue;
+	protected final Consumer<T> onValueChange;
 	@Nullable
-	private T hoveredValue;
-	private final int dropdownItemHeight;
+	protected T hoveredValue;
+	protected final int dropdownItemHeight;
+	protected final DropdownMenu menu;
 	
-	public FluidDropdownWidget(FluidTheme theme, Component label, int x, int y, int width, int dropdownItemHeight, int height, T initialValue, HashMap<T, Component> values, Consumer<T> onValueChange)
+	public FluidDropdownWidget(FluidTheme theme, Component label, int x, int y, int width, int dropdownItemHeight, int height, T initialValue, LinkedHashMap<T, Component> values, Consumer<T> onValueChange)
 	{
 		super(theme, label, x, y, width, height, null, null);
 		this.values = values;
@@ -32,12 +33,26 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 		this.onValueChange = onValueChange;
 		this.hoveredValue = null;
 		this.dropdownItemHeight = dropdownItemHeight;
+		
+		
+		Font font = Minecraft.getInstance().font;
+		FluidButtonWidget[] buttons = new FluidButtonWidget[values.size()];
+		for (int i = 0; i < buttons.length; i++)
+		{
+			Component name = values.values().stream().toList().get(i);
+			T value = values.keySet().stream().toList().get(i);
+			buttons[i] = new FluidButtonWidget(theme, name, width, 20, button ->
+			{
+				selectedValue = value;
+			});
+		}
+		menu = new DropdownMenu(theme, getX(), getY() + getHeight() + (font.lineHeight / 2), getWidth(), 100, 10, buttons);
 	}
 	
 	public FluidDropdownWidget(FluidTheme theme, Component label, int x, int y, int width, int height, int dropdownItemHeight, T initialValue, T[] values, Consumer<T> onValueChange)
 	{
 		super(theme, label, x, y, width, height, null, null);
-		this.values = new HashMap<>();
+		this.values = new LinkedHashMap<>();
 		for (T item : values)
 		{
 			this.values.put(item, Component.literal(item.toString()));
@@ -47,6 +62,31 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 		this.onValueChange = onValueChange;
 		this.hoveredValue = null;
 		this.dropdownItemHeight = dropdownItemHeight;
+		
+		
+		Font font = Minecraft.getInstance().font;
+		FluidButtonWidget[] buttons = new FluidButtonWidget[values.length];
+		for (int i = 0; i < buttons.length; i++)
+		{
+			T value = values[i];
+			Component name = Component.literal(value.toString());
+			buttons[i] = new FluidButtonWidget(theme, name, width, 20, button ->
+			{
+				selectedValue = value;
+			});
+		}
+		menu = new DropdownMenu(theme, getX(), getY() + getHeight() + (font.lineHeight / 2), getWidth(), 100, 10, buttons);
+		
+	}
+	
+	public FluidDropdownWidget(FluidTheme theme, Component label, int width, int dropdownItemHeight, int height, T initialValue, LinkedHashMap<T, Component> values, Consumer<T> onValueChange)
+	{
+		this(theme, label, 0, 0, width, height, dropdownItemHeight, initialValue, values, onValueChange);
+	}
+	
+	public FluidDropdownWidget(FluidTheme theme, Component label, int width, int height, int dropdownItemHeight, T initialValue, T[] values, Consumer<T> onValueChange)
+	{
+		this(theme, label, 0, 0, width, height, dropdownItemHeight, initialValue, values, onValueChange);
 	}
 	
 	@Override
@@ -60,6 +100,7 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 			if (isFocused())
 			{
 				renderDropdownItems(poseStack, mouseX, mouseY);
+//				menu.render(poseStack, mouseX, mouseY, partialTicks);
 			}
 		}
 	}
@@ -74,6 +115,10 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 		float r = FastColor.ARGB32.red(hoverColor) / 255f;
 		float g = FastColor.ARGB32.green(hoverColor) / 255f;
 		float b = FastColor.ARGB32.blue(hoverColor) / 255f;
+//		RenderSystem.enableBlend();
+//		RenderSystem.enableDepthTest();
+		RenderSystem.disableDepthTest();
+		RenderSystem.disableBlend();
 		RenderSystem.setShaderColor(r, g, b, 1f);
 		fill(poseStack, getX(), getY() + height, getX() + width, maxHeight, 0xFF_FF_FF_FF);
 		RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
@@ -104,6 +149,9 @@ public class FluidDropdownWidget<T> extends FluidButtonWidget
 			drawCenteredString(poseStack, font, values.get(item), getX() + (width / 2), y + (dropdownItemHeight / 2) - (font.lineHeight / 2), textColor);
 			y += dropdownItemHeight + 1;
 		}
+		RenderSystem.disableDepthTest();
+		RenderSystem.disableBlend();
+		
 	}
 	
 	@Override
