@@ -12,12 +12,25 @@ import java.util.function.Consumer;
 
 public class FluidCycleButtonWidget<T> extends FluidButtonWidget
 {
-	private final LinkedHashMap<T, Component> values;
-	private final T initialValue;
-	private T selectedValue;
-	private final Consumer<T> onValueChange;
-	private int currentIndex = 0;
+	protected final LinkedHashMap<T, Component> values;
+	protected final T initialValue;
+	protected T selectedValue;
+	protected final Consumer<T> onValueChange;
+	protected int currentIndex = 0;
 	
+	/**
+	 * Creates a Cycle Button
+	 *
+	 * @param theme         The theme of the mod
+	 * @param label         the label message of the widget
+	 * @param x             the x position
+	 * @param y             the y position
+	 * @param width         the width of the widget
+	 * @param height        the height of the widget
+	 * @param initialValue  the initial value of the cycle button
+	 * @param values        a list of Values and their display names
+	 * @param onValueChange runs everytime the value is changed
+	 */
 	public FluidCycleButtonWidget(FluidTheme theme, Component label, int x, int y, int width, int height, T initialValue, LinkedHashMap<T, Component> values, Consumer<T> onValueChange)
 	{
 		super(theme, label, x, y, width, height, button ->
@@ -35,6 +48,19 @@ public class FluidCycleButtonWidget<T> extends FluidButtonWidget
 		currentIndex = getIndexOfKey(selectedValue);
 	}
 	
+	/**
+	 * Creates a Cycle Button
+	 *
+	 * @param theme         The theme of the mod
+	 * @param label         the label message of the widget
+	 * @param x             the x position
+	 * @param y             the y position
+	 * @param width         the width of the widget
+	 * @param height        the height of the widget
+	 * @param initialValue  the initial value of the cycle button
+	 * @param values        a list of Values and their display names are the value cast to a string
+	 * @param onValueChange runs everytime the value is changed
+	 */
 	public FluidCycleButtonWidget(FluidTheme theme, Component label, int x, int y, int width, int height, T initialValue, T[] values, Consumer<T> onValueChange)
 	{
 		super(theme, label, x, y, width, height, button ->
@@ -58,6 +84,41 @@ public class FluidCycleButtonWidget<T> extends FluidButtonWidget
 		currentIndex = getIndexOfKey(selectedValue);
 	}
 	
+	/**
+	 * Creates a Cycle Button.<br>
+	 * This is used when placed inside a list panel.
+	 *
+	 * @param theme         The theme of the mod
+	 * @param label         the label message of the widget
+	 * @param width         the width of the widget
+	 * @param height        the height of the widget
+	 * @param initialValue  the initial value of the cycle button
+	 * @param values        a list of Values and their display names
+	 * @param onValueChange runs everytime the value is changed
+	 */
+	public FluidCycleButtonWidget(FluidTheme theme, Component label, int width, int height, T initialValue, LinkedHashMap<T, Component> values, Consumer<T> onValueChange)
+	{
+		this(theme, label, 0, 0, width, height, initialValue, values, onValueChange);
+	}
+	
+	
+	/**
+	 * Creates a Cycle Button.<br>
+	 * This is used when placed inside a list panel.
+	 *
+	 * @param theme         The theme of the mod
+	 * @param label         the label message of the widget
+	 * @param width         the width of the widget
+	 * @param height        the height of the widget
+	 * @param initialValue  the initial value of the cycle button
+	 * @param values        a list of Values and their display names are the value cast to a string
+	 * @param onValueChange runs everytime the value is changed
+	 */
+	public FluidCycleButtonWidget(FluidTheme theme, Component label, int width, int height, T initialValue, T[] values, Consumer<T> onValueChange)
+	{
+		this(theme, label, 0, 0, width, height, initialValue, values, onValueChange);
+	}
+	
 	@Override
 	public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTicks)
 	{
@@ -69,6 +130,9 @@ public class FluidCycleButtonWidget<T> extends FluidButtonWidget
 	}
 	
 	
+	/**
+	 * Gets the next element in the cycle
+	 */
 	public void next()
 	{
 		currentIndex++;
@@ -79,6 +143,9 @@ public class FluidCycleButtonWidget<T> extends FluidButtonWidget
 		onValueChange.accept(next);
 	}
 	
+	/**
+	 * Gets the previous element in the cycle
+	 */
 	public void previous()
 	{
 		currentIndex--;
@@ -89,12 +156,21 @@ public class FluidCycleButtonWidget<T> extends FluidButtonWidget
 		onValueChange.accept(previous);
 	}
 	
+	/**
+	 * Resets the value to the initial value
+	 */
 	public void reset()
 	{
 		selectedValue = initialValue;
 		currentIndex = getIndexOfKey(selectedValue);
 	}
 	
+	/**
+	 * Gets the element based on the index provided
+	 *
+	 * @param index the index of the element
+	 * @return the element or null if none was found
+	 */
 	public @Nullable T getElementByIndex(int index)
 	{
 		if (index <= values.size())
@@ -102,6 +178,12 @@ public class FluidCycleButtonWidget<T> extends FluidButtonWidget
 		return null;
 	}
 	
+	/**
+	 * Gets the index based on the element provided
+	 *
+	 * @param key the element
+	 * @return the index of the element or -1 if none was found
+	 */
 	public int getIndexOfKey(T key)
 	{
 		if (values.containsKey(key))
@@ -116,6 +198,12 @@ public class FluidCycleButtonWidget<T> extends FluidButtonWidget
 		return -1;
 	}
 	
+	/**
+	 * gets the index of the specified display name
+	 *
+	 * @param value the display name
+	 * @return the index of the display name or -1 if none was found.
+	 */
 	public int getIndexOfValue(Component value)
 	{
 		if (values.containsValue(value))
