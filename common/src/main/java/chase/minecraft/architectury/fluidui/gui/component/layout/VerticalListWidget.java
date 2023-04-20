@@ -1,5 +1,6 @@
 package chase.minecraft.architectury.fluidui.gui.component.layout;
 
+import chase.minecraft.architectury.fluidui.FluidTheme;
 import chase.minecraft.architectury.fluidui.enums.Alignment;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -9,39 +10,45 @@ import org.jetbrains.annotations.NotNull;
 public class VerticalListWidget extends AbstractListWidget
 {
 	
-	public VerticalListWidget(Component label, int x, int y, int width, int height, int space, Alignment alignment, AbstractWidget... children)
+	public VerticalListWidget(FluidTheme theme, Component label, int x, int y, int width, int height, int space, Alignment alignment, AbstractWidget... children)
 	{
-		super(label, x, y, width, height, space, alignment, children);
+		super(theme, label, x, y, width, height, space, alignment, children);
 	}
 	
-	public VerticalListWidget(Component label, int x, int y, int width, int height, int space, AbstractWidget... children)
+	public VerticalListWidget(FluidTheme theme, Component label, int x, int y, int width, int height, int space, AbstractWidget... children)
 	{
-		this(label, x, y, width, height, space, Alignment.DEFAULT, children);
+		super(theme, label, x, y, width, height, space, children);
+	}
+	
+	public VerticalListWidget(FluidTheme theme, Component label, int width, int height, int space, Alignment alignment, AbstractWidget... children)
+	{
+		super(theme, label, width, height, space, alignment, children);
+	}
+	
+	public VerticalListWidget(FluidTheme theme, Component label, int width, int height, int space, AbstractWidget... children)
+	{
+		super(theme, label, width, height, space, children);
 	}
 	
 	@Override
 	public void renderWidget(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTicks)
 	{
-		int contentHeight = 0;
+		int contentHeight = calculateContentSize();
 		int currentY = getSpace();
+		
+		for (int i = 0; i < children().length; i++)
+		{
+			AbstractWidget widget = children()[i];
+			contentHeight += widget.getHeight() + getSpace();
+		}
 		switch (alignment)
 		{
 			case CENTER ->
 			{
-				for (int i = 0; i < children().length; i++)
-				{
-					AbstractWidget widget = children()[i];
-					contentHeight += widget.getHeight() + getSpace();
-				}
 				currentY = (height / 2) - (contentHeight / 2);
 			}
 			case BOTTOM ->
 			{
-				for (int i = 0; i < children().length; i++)
-				{
-					AbstractWidget widget = children()[i];
-					contentHeight += widget.getHeight() + getSpace();
-				}
 				currentY = height - contentHeight;
 			}
 		}
@@ -54,4 +61,8 @@ public class VerticalListWidget extends AbstractListWidget
 		}
 	}
 	
+	protected int calculateContentSize()
+	{
+		return super.calculateContentSize(true);
+	}
 }
