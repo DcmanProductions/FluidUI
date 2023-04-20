@@ -22,14 +22,15 @@ public class FluidTheme
 	protected int dropdownHoverForegroundColor;
 	protected int borderColor;
 	protected final ResourceLocation themeLocation;
-	public static final FluidTheme DEFUALT = new FluidTheme(FluidUI.MOD_ID, "default");
+	public static final FluidTheme DEFAULT = new FluidTheme(FluidUI.MOD_ID, "default");
 	public static final FluidTheme DARK = new FluidTheme(FluidUI.MOD_ID, "dark");
 	protected final String themeName;
 	
 	/**
 	 * Create a theme with the mod id and theme name<br \>
 	 * Theme file is in <i>resources/assets/{modId}/fluid/themes/{themeName}.json</i>
-	 * @param modId The id of your mod
+	 *
+	 * @param modId     The id of your mod
 	 * @param themeName The name of the theme, not including the .json
 	 */
 	public FluidTheme(String modId, String themeName)
@@ -37,6 +38,11 @@ public class FluidTheme
 		themeLocation = new ResourceLocation(modId, "fluid/themes/%s.json".formatted(themeName));
 		this.themeName = themeName;
 		AsyncThemeLoader.getInstance().put(this);
+	}
+	
+	public static FluidTheme register(String modId, String themeName)
+	{
+		return new FluidTheme(modId, themeName);
 	}
 	
 	/**
