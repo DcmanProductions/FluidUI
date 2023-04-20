@@ -24,9 +24,9 @@ The second one only takes in the `Component` for the title and the parent is **_
  * @param title  - Screens title
  * @param parent - the parent screen
  */
-public TestScreen(Component title, @Nullable Screen parent)
+public TestScreen(FluidTheme theme, Component title, @Nullable Screen parent)
 {
-    super(title, parent);
+    super(theme, title, parent);
 }
 
 /**
@@ -34,9 +34,9 @@ public TestScreen(Component title, @Nullable Screen parent)
  *
  * @param title - Screens title
  */
-public TestScreen(Component title)
+public TestScreen(FluidTheme theme, Component title)
 {
-    super(title);
+    super(theme, title);
 }
 
 ```

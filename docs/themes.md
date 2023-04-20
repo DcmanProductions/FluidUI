@@ -1,43 +1,52 @@
 <link href="/FluidUI/style.min.css" rel="stylesheet">
 <link rel="shortcut icon" href="/FluidUI/images/Fluid UI Logo.svg" type="image/x-icon">
-# Fluid Theme
+
+# Themes
 
 Fluid Theme class is where all the interface styling is stored.  
 Initialize your theme in your mods client entry point.
 
-## Add Import Statement
+## Namespace
 
 ```java
 import chase.minecraft.architectury.fluidui;
 ```
 
-## Set the Themes Colors
-
+## Create JSON
+First we need to create a theme.   
+Create a json file in `/resources/assets/{modid}/fluid/themes/{theme name}.json`
+```json5
+{
+  // The color of the background 
+  "backgroundColor": "#111111",
+  // The accent color 
+  "primaryColor": "#e2564c",
+  // The background color of the widgets 
+  "widgetBackgroundColor": "#1a1a1a",
+  // The foreground color of the widgets 
+  "widgetForegroundColor": "#ffffff",
+  // The hover color of the background 
+  "widgetHoverBackgroundColor": "#2b2b2b",
+  // The hover color of the foreground
+  "widgetHoverForegroundColor": "#FFFFFF",
+  // The dropdown item hover background color
+  "dropdownHoverBackgroundColor": "#1a1a1a",
+  // The dropdown item hover foreground color
+  "dropdownHoverForegroundColor": "#FFFFFF",
+  // The color of any borders
+  "borderColor": "#24F65F"
+}
+```
+## Registration
+Next we need to register the theme, goto your client initialization and run:
 ```java
-// Sets the color of the hover background for dropdown menus
-FluidTheme.setDropdownHoverBackgroundColor(0xFF_FF_FF);
+public static final FluidTheme THEME = FluidTheme.register("modid", "theme name"); // Theme name minus the .json
+```
 
-// Sets the color of the hover text for dropdown menus
-FluidTheme.setDropdownHoverForegroundColor(0xFF_FF_FF);
-
-// Sets the color of all screen backgrounds
-FluidTheme.setBackgroundColor(0xFF_FF_FF);
-
-// Sets the color of the primary color used for accenting
-FluidTheme.setPrimaryColor(0xFF_FF_FF);
-
-// Sets the color of all the widgets background
-FluidTheme.setWidgetBackgroundColor(0xFF_FF_FF);
-
-// Sets the color of all the widgets text 
-FluidTheme.setWidgetForegroundColor(0xFF_FF_FF);
-
-// Sets the color of all the widgets background when hovering
-FluidTheme.setWidgetHoverBackgroundColor(0xFF_FF_FF);
-
-// Sets the color of all the widgets text when hovering
-FluidTheme.setWidgetHoverForegroundColor(0xFF_FF_FF);
-
-// Sets the color of widgets borders
-FluidTheme.setBorderColor(0xFF_FF_FF);
+## PreInstalled
+There are a few preinstalled themes you can use (if you're lazy).
+1. DEFAULT
+2. DARK
+```java
+public static final FluidTheme THEME = FluidTheme.DEFAULT;
 ```
