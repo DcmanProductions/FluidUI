@@ -53,4 +53,15 @@ public class ScreenSpaceCoordinate
 	{
 		return x >= left && y >= top && x <= right && y <= bottom;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "ScreenSpaceCoordinate{" +
+				"top=" + top +
+				", left=" + left +
+				", right=" + right +
+				", bottom=" + bottom +
+				'}';
+	}
 }
