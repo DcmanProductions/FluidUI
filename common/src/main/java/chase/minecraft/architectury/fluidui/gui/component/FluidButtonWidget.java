@@ -18,13 +18,14 @@ import java.util.function.Consumer;
 public class FluidButtonWidget extends AbstractButton
 {
 	@Nullable
-	private final Consumer<FluidButtonWidget> onClick, onContextMenu;
+	protected final Consumer<FluidButtonWidget> onClick, onContextMenu;
 	protected ScreenSpaceCoordinate coordinate;
 	protected final FluidTheme theme;
 	
 	/**
 	 * Creates a stylish button widget.
 	 *
+	 * @param theme         The fluid theme used for this mod
 	 * @param label         The text on the button
 	 * @param x             the x position
 	 * @param y             the y position
@@ -47,6 +48,7 @@ public class FluidButtonWidget extends AbstractButton
 	/**
 	 * Creates a stylish button widget without right-click functionality
 	 *
+	 * @param theme   The fluid theme used for this mod
 	 * @param label   The text on the button
 	 * @param x       the x position
 	 * @param y       the y position
@@ -57,6 +59,37 @@ public class FluidButtonWidget extends AbstractButton
 	public FluidButtonWidget(FluidTheme theme, Component label, int x, int y, int width, int height, Consumer<FluidButtonWidget> onClick)
 	{
 		this(theme, label, x, y, width, height, onClick, null);
+	}
+	
+	/**
+	 * Creates a stylish button widget.<br>
+	 * This is used when placed inside a list panel.
+	 *
+	 * @param theme         The fluid theme used for this mod
+	 * @param label         The text on the button
+	 * @param width         the width of the button
+	 * @param height        the height of the button
+	 * @param onClick       this runs when the button is left-clicked
+	 * @param onContextMenu this runs when the button is right-clicked
+	 */
+	public FluidButtonWidget(FluidTheme theme, Component label, int width, int height, @Nullable Consumer<FluidButtonWidget> onClick, @Nullable Consumer<FluidButtonWidget> onContextMenu)
+	{
+		this(theme, label, 0, 0, width, height, onClick, onContextMenu);
+	}
+	
+	/**
+	 * Creates a stylish button widget without right-click functionality,<br>
+	 * This is used when placed inside a list panel.
+	 *
+	 * @param theme   The fluid theme used for this mod
+	 * @param label   The text on the button
+	 * @param width   the width of the button
+	 * @param height  the height of the button
+	 * @param onClick this runs when the button is left-clicked
+	 */
+	public FluidButtonWidget(FluidTheme theme, Component label, int width, int height, Consumer<FluidButtonWidget> onClick)
+	{
+		this(theme, label, 0, 0, width, height, onClick, null);
 	}
 	
 	@Override
@@ -114,7 +147,7 @@ public class FluidButtonWidget extends AbstractButton
 				playDownSound(Minecraft.getInstance().getSoundManager());
 			}
 		}
-		return super.mouseClicked(mouseX, mouseY, mouseButton);
+		return true;
 	}
 	
 	@Override
