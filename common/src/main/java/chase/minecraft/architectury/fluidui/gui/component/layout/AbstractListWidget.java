@@ -1,8 +1,11 @@
 package chase.minecraft.architectury.fluidui.gui.component.layout;
 
+import chase.minecraft.architectury.fluidui.FluidTheme;
 import chase.minecraft.architectury.fluidui.enums.Alignment;
 import chase.minecraft.architectury.fluidui.util.ScreenSpaceCoordinate;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -13,23 +16,35 @@ import java.util.List;
 public abstract class AbstractListWidget extends AbstractWidget
 {
 	
-	private ScreenSpaceCoordinate coordinate;
+	protected ScreenSpaceCoordinate coordinate;
 	private List<AbstractWidget> children;
 	private int space = 5;
 	protected Alignment alignment;
+	protected FluidTheme theme;
 	
-	public AbstractListWidget(Component label, int x, int y, int width, int height, int space, Alignment alignment, AbstractWidget... children)
+	public AbstractListWidget(FluidTheme theme, Component label, int x, int y, int width, int height, int space, Alignment alignment, AbstractWidget... children)
 	{
-		super(x, y, width, height, label);
+		super(x, y + Minecraft.getInstance().font.lineHeight + 10, width, height, label);
 		this.children = List.of(children);
 		this.space = space;
 		this.alignment = alignment;
 		coordinate = new ScreenSpaceCoordinate(this);
+		this.theme = theme;
 	}
 	
-	public AbstractListWidget(Component label, int x, int y, int width, int height, int space, AbstractWidget... children)
+	public AbstractListWidget(FluidTheme theme, Component label, int x, int y, int width, int height, int space, AbstractWidget... children)
 	{
-		this(label, x, y, width, height, space, Alignment.DEFAULT, children);
+		this(theme, label, x, y, width, height, space, Alignment.DEFAULT, children);
+	}
+	
+	public AbstractListWidget(FluidTheme theme, Component label, int width, int height, int space, Alignment alignment, AbstractWidget... children)
+	{
+		this(theme, label, 0, 0, width, height, space, alignment, children);
+	}
+	
+	public AbstractListWidget(FluidTheme theme, Component label, int width, int height, int space, AbstractWidget... children)
+	{
+		this(theme, label, 0, 0, width, height, space, Alignment.DEFAULT, children);
 	}
 	
 	
@@ -44,6 +59,8 @@ public abstract class AbstractListWidget extends AbstractWidget
 		{
 			isHovered = coordinate.isWithinBounds(mouseX, mouseY);
 			renderWidget(poseStack, mouseX, mouseY, partialTicks);
+			Font font = Minecraft.getInstance().font;
+			drawCenteredString(poseStack, font, getMessage(), getWidth() / 2, getY() - font.lineHeight - 5, theme.getWidgetForegroundColor());
 		}
 		super.render(poseStack, mouseX, mouseY, partialTicks);
 	}
@@ -110,4 +127,16 @@ public abstract class AbstractListWidget extends AbstractWidget
 		}
 		return false;
 	}
+	
+	protected int calculateContentSize(boolean height)
+	{
+		int size = 0;
+		for (int i = 0; i < children().length; i++)
+		{
+			AbstractWidget widget = children()[i];
+			size += (height ? widget.getHeight() : widget.getWidth()) + getSpace();
+		}
+		return size;
+	}
+	
 }
