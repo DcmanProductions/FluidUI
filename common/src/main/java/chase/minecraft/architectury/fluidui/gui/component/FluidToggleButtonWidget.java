@@ -13,9 +13,9 @@ import java.util.function.Consumer;
 
 public class FluidToggleButtonWidget extends FluidButtonWidget
 {
-	private boolean value;
-	private final boolean initialValue;
-	private final Component activeLabel, inactiveLabel;
+	protected boolean value;
+	protected final boolean initialValue;
+	protected final Component activeLabel, inactiveLabel;
 	
 	public FluidToggleButtonWidget(FluidTheme theme, Component activeLabel, Component inactiveLabel, int x, int y, int width, int height, boolean initialValue, Consumer<Boolean> onValueChange)
 	{
@@ -32,6 +32,17 @@ public class FluidToggleButtonWidget extends FluidButtonWidget
 		this.initialValue = this.value = initialValue;
 		this.activeLabel = activeLabel;
 		this.inactiveLabel = inactiveLabel;
+	}
+	
+	public FluidToggleButtonWidget(FluidTheme theme, Component activeLabel, Component inactiveLabel, int width, int height, boolean initialValue, Consumer<Boolean> onValueChange)
+	{
+		this(theme, activeLabel, inactiveLabel, 0, 0, width, height, initialValue, false, onValueChange);
+	}
+	
+	
+	public FluidToggleButtonWidget(FluidTheme theme, Component activeLabel, Component inactiveLabel, int width, int height, boolean initialValue, boolean highlightIfActive, Consumer<Boolean> onValueChange)
+	{
+		this(theme, activeLabel, inactiveLabel, 0, 0, width, height, initialValue, highlightIfActive, onValueChange);
 	}
 	
 	@Override
